@@ -1,8 +1,9 @@
 import axios, { AxiosInstance } from "axios";
 import HttpClient from "./HttpClient";
 
-export default class HttpClientAdapter implements HttpClient {
+class HttpClientAdapter implements HttpClient {
   private axiosInstance: AxiosInstance | null = null;
+  private static instance: HttpClientAdapter | null = null;
 
   constructor() {
     const baseURL = "http://localhost:89/";
@@ -12,6 +13,13 @@ export default class HttpClientAdapter implements HttpClient {
         "Content-Type": "application/json",
       },
     });
+  }
+
+  static getInstance(): HttpClient {
+    if (!this.instance) {
+      this.instance = new HttpClientAdapter();
+    }
+    return this.instance;
   }
 
   async get(url: string, configs?: object | undefined): Promise<any> {
@@ -35,3 +43,5 @@ export default class HttpClientAdapter implements HttpClient {
     return await this.axiosInstance?.delete(url, configs);
   }
 }
+
+export default HttpClientAdapter.getInstance();
