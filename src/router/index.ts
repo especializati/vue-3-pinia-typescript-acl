@@ -1,23 +1,49 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../pages/HomePage.vue";
 import ContactPage from "../pages/ContactPage.vue";
+import AuthTemplate from "../layouts/AuthTemplate.vue";
+import LoginPage from "../pages/Auth/LoginPage.vue";
+import ForgotPassword from "../pages/Auth/ForgotPassword.vue";
+import DefaultTemplate from "../layouts/DefaultTemplate.vue";
 
 const routes = [
-    {
-        name: 'home',
+  {
+    path: "/",
+    component: AuthTemplate,
+    children: [
+      {
+        path: "",
+        component: LoginPage,
+        name: "auth.login",
+      },
+      {
+        path: "esqueci-a-senha",
+        component: ForgotPassword,
+        name: "forgot.password",
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    component: DefaultTemplate,
+    children: [
+      {
+        path: "",
         component: HomePage,
-        path: '/'
-    },
-    {
-        name: 'contact',
+        name: "admin.home",
+      },
+      {
+        path: "contato",
         component: ContactPage,
-        path: '/contato'
-    }
-]
+        name: "admin.contact",
+      },
+    ],
+  },
+];
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
-    routes
-})
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes,
+});
 
-export default router
+export default router;
