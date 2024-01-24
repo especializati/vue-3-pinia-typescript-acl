@@ -12,8 +12,8 @@ export default {
         const auth = () => {
             loading.value = true
             useStore.auth(email.value, password.value)
-            .then(response => console.log(response))
-            .catch(error => console.log(error))
+            .then(response => alert(response.data.token))
+            .catch(() => alert('ops, falha'))
             .finally(() => loading.value = false)
         }
 
