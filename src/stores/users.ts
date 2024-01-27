@@ -15,6 +15,9 @@ export const useUsersStore = defineStore('users', {
     actions: {
         async auth(email: string, password: string): Promise<any> {
             return await userGateway.login(email, password)
+        },
+        async getMe(): Promise<void> {
+            await userGateway.getMe().then(user => this.me = user)
         }
     }
 })
