@@ -1,7 +1,7 @@
 <script lang="ts">
 import { reactive, ref } from 'vue'
-import { useUsersStore } from '../../stores/users'
-import router from '../../router'
+import { useUsersStore } from '@/stores/users'
+import router from '@/router'
 
 export default {
     setup() {
