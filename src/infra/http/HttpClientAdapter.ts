@@ -1,12 +1,13 @@
 import axios, { AxiosInstance } from "axios";
 import HttpClient from "./HttpClient";
+import { API_URL } from "@/utils/constants";
 
 class HttpClientAdapter implements HttpClient {
   private axiosInstance: AxiosInstance | null = null;
   private static instance: HttpClientAdapter | null = null;
 
   constructor() {
-    const baseURL = "http://localhost:89/";
+    const baseURL = API_URL;
     this.axiosInstance = axios.create({
       baseURL,
       headers: {
