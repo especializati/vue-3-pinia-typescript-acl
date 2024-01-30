@@ -3,6 +3,7 @@ import LoginPage from "@/pages/auth/LoginPage.vue";
 import ForgotPassword from "@/pages/auth/ForgotPassword.vue";
 import DefaultTemplate from "@/layouts/DefaultTemplate.vue";
 import HomeAdmin from "@/pages/admin/home/HomeAdmin.vue";
+import ListUsers from "@/pages/admin/users/ListUsers.vue";
 
 export default [
   {
@@ -25,6 +26,11 @@ export default [
     path: "/admin",
     component: DefaultTemplate,
     children: [
+      {
+        path: "users",
+        component: ListUsers,
+        name: "users.index",
+      },
       {
         path: "",
         component: HomeAdmin,
