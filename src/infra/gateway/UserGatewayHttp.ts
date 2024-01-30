@@ -18,6 +18,11 @@ export default class UserGatewayHttp {
 
   async getMe(): Promise<User> {
     const response = await httpAdapter.withAuthorization().get('/me')
+    .catch(error => {
+      if (error.response.status === 401) {
+        localStorage.removeItem(NAME_TOKEN)
+      }
+    })
     const { id, name, email } = response.data.data
     return new User(id, name, email)
   }
