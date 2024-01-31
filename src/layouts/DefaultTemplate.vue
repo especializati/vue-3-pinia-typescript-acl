@@ -5,7 +5,10 @@ export default {
 </script>
 
 <template>
-    <div>Menu do template</div>
+    <div>
+        <router-link :to="{name: 'admin.home'}">Home</router-link>
+        <router-link :to="{name: 'users.index'}" v-can="'users.index'">User</router-link>
+    </div>
     <div>
         <router-view></router-view>
     </div>
