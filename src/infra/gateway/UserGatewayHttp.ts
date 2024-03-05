@@ -1,6 +1,7 @@
 import Permission from "@/entities/Permission";
 import User from "@/entities/User";
 import httpAdapter from "@/infra/http/HttpClientAdapter";
+import { PAGINATION } from "@/types/pagination";
 import { NAME_TOKEN } from "@/utils/constants";
 
 export default class UserGatewayHttp {
@@ -43,7 +44,7 @@ export default class UserGatewayHttp {
     page: number = 1,
     filter: string = "",
     totalPerPage: number = 15
-  ): Promise<{ items: User[] }> {
+  ): Promise<{ users: User[], meta: PAGINATION }> {
     const response = await httpAdapter
       .withAuthorization()
       .get(
@@ -54,6 +55,6 @@ export default class UserGatewayHttp {
       const { id, name, email } = userData;
       return new User(id, name, email);
     });
-    return { items: users };
+    return { users, meta: { ...response.data.meta } };
   }
 }
