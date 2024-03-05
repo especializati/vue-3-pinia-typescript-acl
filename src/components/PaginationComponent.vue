@@ -30,7 +30,7 @@ export default defineComponent({
                 <li class="page-item" v-if="data.current_page !== 1">
                     <a class="page-link" href="#" @click.prevent="loadPage(data.current_page - 1)">Anterior</a>
                 </li>
-                <li class="page-item" v-if="data.last_page > 1">
+                <li class="page-item" v-if="data.last_page > 1 && data.current_page !== data.last_page">
                     <a class="page-link" href="#" @click.prevent="loadPage(data.current_page + 1)">Próxima</a>
                 </li>
             </ul>
