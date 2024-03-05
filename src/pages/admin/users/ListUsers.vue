@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { useUsersStore } from '@/stores/users';
 import { onMounted, ref } from 'vue';
+import PaginationComponent from '@/components/PaginationComponent.vue';
 
 const useStore = useUsersStore()
 const loading = ref(false)
-onMounted(() => {
+onMounted(() => loadUsers(1))
+
+const loadUsers = (page: number = 1) => {
     loading.value = true
-    useStore.getPaginate().finally(() => loading.value = false)
-})
+    useStore.getPaginate(page, '', 4).finally(() => loading.value = false)
+}
 </script>
 
 <template>
@@ -29,4 +32,6 @@ onMounted(() => {
             </tr>
         </tbody>
     </table>
+
+    <pagination-component :data="useStore.meta" @loadPage="loadUsers"></pagination-component>
 </template>

@@ -9,7 +9,7 @@ export const useUsersStore = defineStore('users', {
     state: () => ({
         me: null as null | User,
         users: [] as User[],
-        meta: null as PAGINATION | null
+        meta: undefined as undefined | PAGINATION
     }),
     getters: {
         hasUsers: (state): boolean => state.users.length > 0
