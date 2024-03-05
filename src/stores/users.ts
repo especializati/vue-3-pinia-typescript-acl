@@ -18,6 +18,9 @@ export const useUsersStore = defineStore('users', {
         },
         async getMe() {
             await userGateway.getMe().then(user => this.me = user)
+        },
+        async getPaginate(page: number = 1, filter: string = '', totalPerPage: number = 15): Promise<void> {
+            await userGateway.getPaginate(page, filter, totalPerPage).then(response => this.users = response.items)
         }
     }
 })
