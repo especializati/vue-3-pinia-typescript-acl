@@ -63,4 +63,10 @@ export default class UserGatewayHttp {
     const { id, name, email } = response.data.data
     return new User(id, name, email)
   }
+
+  async getById(id: string): Promise<User> {
+    const response = await httpAdapter.withAuthorization().get(`/users/${id}`)
+    const { name, email } = response.data.data
+    return new User(id, name, email)
+  }
 }

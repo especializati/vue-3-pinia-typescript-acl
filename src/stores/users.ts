@@ -30,6 +30,9 @@ export const useUsersStore = defineStore('users', {
         async create(params: PARAMS): Promise<void> {
             const user = await userGateway.create(params)
             this.users.push(user)
+        },
+        async getById(id: string): Promise<User> {
+            return await userGateway.getById(id)
         }
     }
 })
