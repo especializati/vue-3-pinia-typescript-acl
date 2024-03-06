@@ -5,6 +5,7 @@ import DefaultTemplate from "@/layouts/DefaultTemplate.vue";
 import HomeAdmin from "@/pages/admin/home/HomeAdmin.vue";
 import ListUsers from "@/pages/admin/users/ListUsers.vue";
 import CreateUser from "@/pages/admin/users/CreateUser.vue";
+import DetailUser from "@/pages/admin/users/DetailUser.vue";
 
 export default [
   {
@@ -27,6 +28,12 @@ export default [
     path: "/admin",
     component: DefaultTemplate,
     children: [
+      {
+        path: "users/:id",
+        component: DetailUser,
+        name: "users.show",
+        props: true
+      },
       {
         path: "users/novo",
         component: CreateUser,

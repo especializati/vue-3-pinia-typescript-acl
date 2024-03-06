@@ -39,12 +39,16 @@ const loadUsers = (page: number = 1) => {
             <tr>
                 <td>Name</td>
                 <td>E-mail</td>
+                <td>Actions</td>
             </tr>
         </thead>
         <tbody>
             <tr v-for="user in useStore.users" :key="user.id">
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
+                <td>
+                    <router-link :to="{ name: 'users.show', params: { id: user.id } }">Detalhes</router-link>
+                </td>
             </tr>
         </tbody>
     </table>
