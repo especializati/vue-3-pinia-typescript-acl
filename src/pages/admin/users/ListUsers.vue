@@ -18,6 +18,7 @@ const loadUsers = (page: number = 1) => {
 
 <template>
     <div>List Users</div>
+    <router-link :to="{ name: 'users.create' }">Criar Novo Usuário</router-link>
 
     <div v-if="loading">Carregando...</div>
 
