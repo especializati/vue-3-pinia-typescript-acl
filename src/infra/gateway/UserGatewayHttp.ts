@@ -57,4 +57,10 @@ export default class UserGatewayHttp {
     });
     return { users, meta: { ...response.data.meta } };
   }
+
+  async create(params: object): Promise<User> {
+    const response = await httpAdapter.withAuthorization().post('/users', params)
+    const { id, name, email } = response.data.data
+    return new User(id, name, email)
+  }
 }

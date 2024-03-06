@@ -26,6 +26,16 @@ export const useUsersStore = defineStore('users', {
                 this.users = response.users
                 this.meta = response.meta
             })
+        },
+        async create(params: PARAMS): Promise<void> {
+            const user = await userGateway.create(params)
+            this.users.push(user)
         }
     }
 })
+
+type PARAMS = {
+    name: string
+    email: string
+    password: string
+}
