@@ -79,4 +79,10 @@ export default class UserGatewayHttp {
       .then(() => true)
       .catch(() => false);
   }
+
+  async update(id: string,params: object): Promise<Response> {
+    return await httpAdapter
+      .withAuthorization()
+      .put(`/users/${id}`, params)
+  }
 }

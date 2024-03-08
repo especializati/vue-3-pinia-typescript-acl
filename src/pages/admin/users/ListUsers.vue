@@ -48,6 +48,7 @@ const loadUsers = (page: number = 1) => {
                 <td>{{ user.email }}</td>
                 <td>
                     <router-link :to="{ name: 'users.show', params: { id: user.id } }">Detalhes</router-link>
+                    | <router-link :to="{ name: 'users.edit', params: { id: user.id } }">Editar</router-link>
                 </td>
             </tr>
         </tbody>

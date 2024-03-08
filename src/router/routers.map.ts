@@ -6,6 +6,7 @@ import HomeAdmin from "@/pages/admin/home/HomeAdmin.vue";
 import ListUsers from "@/pages/admin/users/ListUsers.vue";
 import CreateUser from "@/pages/admin/users/CreateUser.vue";
 import DetailUser from "@/pages/admin/users/DetailUser.vue";
+import EditUser from "@/pages/admin/users/EditUser.vue";
 
 export default [
   {
@@ -28,6 +29,12 @@ export default [
     path: "/admin",
     component: DefaultTemplate,
     children: [
+      {
+        path: "users/:id/edit",
+        component: EditUser,
+        name: "users.edit",
+        props: true
+      },
       {
         path: "users/:id",
         component: DetailUser,

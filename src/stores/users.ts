@@ -45,6 +45,10 @@ export const useUsersStore = defineStore("users", {
         .delete(id)
         .then(() => (this.users = this.users.filter((user) => user.id !== id)));
     },
+
+    async update(params: PARAMS_WITH_ID): Promise<Response> {
+      return await userGateway.update(params.id, params);
+    },
   },
 });
 
@@ -53,3 +57,7 @@ type PARAMS = {
   email: string;
   password: string;
 };
+
+type PARAMS_WITH_ID = {
+  id: string;
+} & PARAMS;
