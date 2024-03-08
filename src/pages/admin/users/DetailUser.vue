@@ -23,8 +23,16 @@ export default {
                     .finally(() => loading.value = false)
         })
 
+        const loadingDelete = ref(false)
+        const deleteUser = () => {
+            loadingDelete.value = true
+            useStore.destroy(userId.value).then(() => {
+                router.push({ name: 'users.index' })
+            }).finally(() => loadingDelete.value = false)
+        }
+
         return {
-            loading, user
+            loading, user, deleteUser, loadingDelete
         }
     },
 }
@@ -38,4 +46,9 @@ export default {
         <li><strong>Nome</strong>{{ user?.name }}</li>
         <li><strong>E-mail</strong>{{ user?.email }}</li>
     </ul>
+
+    <div v-if="user">
+        <span v-if="loadingDelete">Deletando...</span>
+        <a v-else href="#" @click.prevent="deleteUser">Deletar o Usuário {{ user.name }}</a>
+    </div>
 </template>

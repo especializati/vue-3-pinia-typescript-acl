@@ -44,7 +44,7 @@ export default class UserGatewayHttp {
     page: number = 1,
     filter: string = "",
     totalPerPage: number = 15
-  ): Promise<{ users: User[], meta: PAGINATION }> {
+  ): Promise<{ users: User[]; meta: PAGINATION }> {
     const response = await httpAdapter
       .withAuthorization()
       .get(
@@ -59,14 +59,24 @@ export default class UserGatewayHttp {
   }
 
   async create(params: object): Promise<User> {
-    const response = await httpAdapter.withAuthorization().post('/users', params)
-    const { id, name, email } = response.data.data
-    return new User(id, name, email)
+    const response = await httpAdapter
+      .withAuthorization()
+      .post("/users", params);
+    const { id, name, email } = response.data.data;
+    return new User(id, name, email);
   }
 
   async getById(id: string): Promise<User> {
-    const response = await httpAdapter.withAuthorization().get(`/users/${id}`)
-    const { name, email } = response.data.data
-    return new User(id, name, email)
+    const response = await httpAdapter.withAuthorization().get(`/users/${id}`);
+    const { name, email } = response.data.data;
+    return new User(id, name, email);
+  }
+
+  async delete(id: string): Promise<boolean> {
+    return await httpAdapter
+      .withAuthorization()
+      .delete(`/users/${id}`)
+      .then(() => true)
+      .catch(() => false);
   }
 }
