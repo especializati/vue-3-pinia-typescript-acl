@@ -5,7 +5,6 @@ export default {
 </script>
 
 <template>
-    Auth
     <div>
         <router-view></router-view>
     </div>
