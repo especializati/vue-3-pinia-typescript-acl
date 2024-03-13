@@ -15,8 +15,8 @@ export default class PermissionGatewayHttp {
       );
     const permissionsData = response.data.data;
     const permissions: Permission[] = permissionsData.map((permissionData: any) => {
-      const { id, name, email } = permissionData;
-      return new Permission(id, name, email);
+      const { id, name, description } = permissionData;
+      return new Permission(id, name, description);
     });
     return { permissions, meta: { ...response.data.meta } };
   }
@@ -25,14 +25,14 @@ export default class PermissionGatewayHttp {
     const response = await httpAdapter
       .withAuthorization()
       .post("/permissions", params);
-    const { id, name, email } = response.data.data;
-    return new Permission(id, name, email);
+    const { id, name, description } = response.data.data;
+    return new Permission(id, name, description);
   }
 
   async getById(id: string): Promise<Permission> {
     const response = await httpAdapter.withAuthorization().get(`/permissions/${id}`);
-    const { name, email } = response.data.data;
-    return new Permission(id, name, email);
+    const { name, description } = response.data.data;
+    return new Permission(id, name, description);
   }
 
   async delete(id: string): Promise<boolean> {
