@@ -19,6 +19,16 @@ export default class UserGatewayHttp {
       });
   }
 
+  async logout(): Promise<Response> {
+    return await httpAdapter
+      .withAuthorization()
+      .post("/logout", {})
+      .then((response) => {
+        localStorage.removeItem(NAME_TOKEN);
+        return Promise.resolve(response);
+      });
+  }
+
   async getMe(): Promise<User> {
     const response = await httpAdapter
       .withAuthorization()
