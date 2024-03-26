@@ -8,6 +8,7 @@ import CreatePermission from "@/pages/admin/permissions/CreatePermission.vue";
 import DetailPermission from "@/pages/admin/permissions/DetailPermission.vue";
 import EditPermission from "@/pages/admin/permissions/EditPermission.vue";
 import ListUsers from "@/pages/admin/users/ListUsers.vue";
+import PermissionsOfUser from "@/pages/admin/users/PermissionsOfUser.vue";
 import CreateUser from "@/pages/admin/users/CreateUser.vue";
 import DetailUser from "@/pages/admin/users/DetailUser.vue";
 import EditUser from "@/pages/admin/users/EditUser.vue";
@@ -76,6 +77,11 @@ export default [
         path: "users",
         component: ListUsers,
         name: "users.index",
+      },
+      {
+        path: "users/permissions",
+        component: PermissionsOfUser,
+        name: "users.permissions",
       },
       {
         path: "",

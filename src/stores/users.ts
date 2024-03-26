@@ -9,6 +9,7 @@ export const useUsersStore = defineStore("users", {
   state: () => ({
     me: null as null | User,
     users: [] as User[],
+    userView: null as null | User,
     meta: undefined as undefined | PAGINATION,
   }),
   getters: {
@@ -52,6 +53,10 @@ export const useUsersStore = defineStore("users", {
     async update(params: PARAMS_WITH_ID): Promise<Response> {
       return await userGateway.update(params.id, params);
     },
+
+    addUserInView(user: User): void {
+      this.userView = user
+    }
   },
 });
 

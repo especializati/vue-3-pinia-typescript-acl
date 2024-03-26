@@ -2,6 +2,8 @@
 import { useUsersStore } from '@/stores/users';
 import { onMounted, ref } from 'vue';
 import PaginationComponent from '@/components/PaginationComponent.vue';
+import User from '@/entities/User';
+import router from '@/router';
 
 const useStore = useUsersStore()
 const loading = ref(false)
@@ -13,6 +15,11 @@ const totalPerPage = ref(4)
 const loadUsers = (page: number = 1) => {
     loading.value = true
     useStore.getPaginate(page, filter.value, totalPerPage.value).finally(() => loading.value = false)
+}
+
+const redirectToPageListPermissions = (user: User) => {
+    useStore.addUserInView(user)
+    router.push({ name: 'users.permissions' })
 }
 </script>
 
@@ -59,6 +66,9 @@ const loadUsers = (page: number = 1) => {
                             class="flex-no-shrink p-2 mr-2 border-2 rounded hover:text-white text-green border-green hover:bg-slate-500">Detalhes</router-link>
                         <router-link :to="{ name: 'users.edit', params: { id: user.id } }"
                             class="flex-no-shrink p-2 ml-1 mr-2 border-2 rounded hover:text-white text-green border-green hover:bg-slate-500">Editar</router-link>
+                        <a href="#" @click.prevent="redirectToPageListPermissions(user)" class="flex-no-shrink p-2 ml-1 mr-2 border-2 rounded hover:text-white text-green border-green hover:bg-slate-500">
+                            Permissões
+                        </a>
                     </td>
                 </tr>
             </tbody>
