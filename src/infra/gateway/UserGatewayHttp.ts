@@ -62,8 +62,14 @@ export default class UserGatewayHttp {
       );
     const usersData = response.data.data;
     const users: User[] = usersData.map((userData: any) => {
-      const { id, name, email } = userData;
-      return new User(id, name, email);
+      const { id, name, email, permissions } = userData;
+      const user = new User(id, name, email)
+      const permissionsOfUser: Permission[] = permissions.map((permissionData: any) => {
+        const { id, name, description } = permissionData;
+        return new Permission(id, name, description)
+      })
+      user.syncPermissions(permissionsOfUser)
+      return user;
     });
     return { users, meta: { ...response.data.meta } };
   }
