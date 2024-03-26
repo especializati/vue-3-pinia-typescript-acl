@@ -66,6 +66,10 @@ export const useUsersStore = defineStore("users", {
     removePermissionOfUser(permissions: Permission): void {
       const updatePermissions = this.userView?.permissions.filter((permission) => permission.id !== permissions.id)
       this.userView?.syncPermissions(updatePermissions!)
+    },
+
+    async syncPermissions(): Promise<Response> {
+      return await userGateway.syncPermissions(this.userView!)
     }
   },
 });

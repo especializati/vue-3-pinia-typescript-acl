@@ -101,4 +101,9 @@ export default class UserGatewayHttp {
       .withAuthorization()
       .put(`/users/${id}`, params)
   }
+
+  async syncPermissions(user: User): Promise<Response> {
+    const permissionsIds = user.permissions.map((permission) => permission.id)
+    return await httpAdapter.post(`/users/${user.id}/permissions-sync`, { permissions: permissionsIds })
+  }
 }

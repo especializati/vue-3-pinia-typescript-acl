@@ -43,6 +43,13 @@ const handleCheckboxChange = (permission: Permission, event: Event) => {
     }
     userStore.removePermissionOfUser(permission)
 }
+
+const syncPermissions = () => {
+    loading.value = true
+    userStore.syncPermissions().then(() => {
+        router.push({ name: 'users.index' })
+    }).finally(() => loading.value = false)
+}
 </script>
 
 <template>
@@ -69,21 +76,40 @@ const handleCheckboxChange = (permission: Permission, event: Event) => {
         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead class="bg-gray-50 dark:bg-gray-800">
                 <tr>
-                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Name</th>
-                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Descricão</th>
-                    <th class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Actions</th>
+                    <th
+                        class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        Name</th>
+                    <th
+                        class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        Descricão</th>
+                    <th
+                        class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                 <tr v-for="permission in permissionStore.permissions" :key="permission.id">
-                    <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">{{ permission.name }}</td>
-                    <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">{{ permission.description }}</td>
+                    <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">{{
+        permission.name }}</td>
+                    <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">{{
+        permission.description }}</td>
                     <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                        <input type="checkbox" :checked="hasPermission(permission.name)" @click="handleCheckboxChange(permission, $event)">
+                        <input type="checkbox" :checked="hasPermission(permission.name)"
+                            @click="handleCheckboxChange(permission, $event)">
                     </td>
                 </tr>
             </tbody>
         </table>
+
+        <div>
+            <form action="#" method="post" @submit.prevent="syncPermissions">
+                <button type="submit" :disabled="loading"
+                    class="mt-4 w-full bg-slate-500 hover:bg-slate-400 text-white font-bold py-2 px-4 border-b-4 border-slate-700 hover:border-slate-500 rounded">
+                    <span v-if="loading">Enviando...</span>
+                    <span v-else>Sincronizar Permissões</span>
+                </button>
+            </form>
+        </div>
     </div>
 
     <pagination-component :data="permissionStore.meta" @loadPage="loadPermissions"></pagination-component>
