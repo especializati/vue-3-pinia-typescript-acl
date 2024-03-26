@@ -3,11 +3,18 @@ import { usePermissionsStore } from '@/stores/permissions';
 import { onMounted, ref } from 'vue';
 import PaginationComponent from '@/components/PaginationComponent.vue';
 import { useUsersStore } from '@/stores/users';
+import router from '@/router';
+import Permission from '@/entities/Permission';
 
 const permissionStore = usePermissionsStore()
 const userStore = useUsersStore()
 const loading = ref(false)
-onMounted(() => loadPermissions(1))
+onMounted(function () {
+    if (userStore.userView === null) {
+        return router.push({ name: 'users.index' })
+    }
+    loadPermissions(1)
+})
 
 const filter = ref('')
 const totalPerPage = ref(50)
@@ -26,6 +33,15 @@ const hasPermission = (permissionName: string): boolean => {
     })
 
     return hasPermission
+}
+
+const handleCheckboxChange = (permission: Permission, event: Event) => {
+    const target = event.target as HTMLInputElement
+    if (target.checked) {
+        userStore.addPermissionOfUser(permission)
+        return
+    }
+    userStore.removePermissionOfUser(permission)
 }
 </script>
 
@@ -63,7 +79,7 @@ const hasPermission = (permissionName: string): boolean => {
                     <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">{{ permission.name }}</td>
                     <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">{{ permission.description }}</td>
                     <td class="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-200 whitespace-nowrap">
-                        <input type="checkbox" :checked="hasPermission(permission.name)">
+                        <input type="checkbox" :checked="hasPermission(permission.name)" @click="handleCheckboxChange(permission, $event)">
                     </td>
                 </tr>
             </tbody>

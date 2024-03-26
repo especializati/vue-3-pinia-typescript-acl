@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import UserGatewayHttp from "@/infra/gateway/UserGatewayHttp";
 import User from "@/entities/User";
+import Permission from "@/entities/Permission";
 import { PAGINATION } from "@/types/pagination";
 
 const userGateway = new UserGatewayHttp();
@@ -56,6 +57,15 @@ export const useUsersStore = defineStore("users", {
 
     addUserInView(user: User): void {
       this.userView = user
+    },
+
+    addPermissionOfUser(permissions: Permission): void {
+      this.userView?.addPermission(permissions)
+    },
+
+    removePermissionOfUser(permissions: Permission): void {
+      const updatePermissions = this.userView?.permissions.filter((permission) => permission.id !== permissions.id)
+      this.userView?.syncPermissions(updatePermissions!)
     }
   },
 });
